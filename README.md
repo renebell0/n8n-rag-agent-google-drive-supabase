@@ -1,12 +1,19 @@
-# Agente RAG con n8n, Google Drive y Supabase
+<div align="center">
+  <h1>Agente RAG con n8n, Google Drive y Supabase</h1>
+  <p>
+    Un agente conversacional que responde preguntas sobre tus documentos de Google Drive, orquestado con n8n y potenciado por IA.
+  </p>
 
-[![Licencia](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![GitHub issues](https://img.shields.io/github/issues/renebell0/n8n-rag-agent-google-drive-supabase)](https://github.com/renebell0/n8n-rag-agent-google-drive-supabase/issues)
-[![GitHub stars](https://img.shields.io/github/stars/renebell0/n8n-rag-agent-google-drive-supabase)](https://github.com/renebell0/n8n-rag-agent-google-drive-supabase/stargazers)
+  <p>
+    <a href="https://github.com/renebell0/n8n-rag-agent-google-drive-supabase/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Licencia"></a>
+    <a href="https://github.com/renebell0/n8n-rag-agent-google-drive-supabase/issues"><img src="https://img.shields.io/github/issues/renebell0/n8n-rag-agent-google-drive-supabase" alt="Issues"></a>
+    <a href="https://github.com/renebell0/n8n-rag-agent-google-drive-supabase/stargazers"><img src="https://img.shields.io/github/stars/renebell0/n8n-rag-agent-google-drive-supabase" alt="Stars"></a>
+    <a href="https://github.com/renebell0/n8n-rag-agent-google-drive-supabase/graphs/contributors"><img src="https://img.shields.io/github/contributors/renebell0/n8n-rag-agent-google-drive-supabase" alt="Contributors"></a>
+    <a href="#"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
+  </p>
+</div>
 
-Este proyecto implementa un agente conversacional avanzado utilizando un patrón de **Generación Aumentada por Recuperación (RAG)**. El agente es capaz de responder preguntas basándose en el contenido de los documentos almacenados en una carpeta de **Google Drive**.
-
-La orquestación del flujo de trabajo se realiza con **n8n**, mientras que **Supabase** (con `pgvector`) se utiliza como base de datos vectorial para almacenar y consultar eficientemente los *embeddings* de los documentos.
+---
 
 ## 🧐 ¿Qué problema resuelve?
 
