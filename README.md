@@ -27,11 +27,12 @@ Este agente RAG automatiza el proceso, permitiendo a los usuarios "chatear" con 
 
 ## 🛠️ Stack Tecnológico
 
--   **Orquestador:** n8n
--   **Base de Datos Vectorial:** Supabase (Postgres con `pgvector`)
--   **Fuente de Documentos:** Google Drive API
--   **Modelos de Embeddings y Generación:** OpenAI (o cualquier otro compatible)
--   **Contenerización:** Docker
+![n8n](https://img.shields.io/badge/n8n-121212?style=for-the-badge&logo=n8n&logoColor=FFFFFF)
+![Google Drive](https://img.shields.io/badge/Google%20Drive-4285F4?style=for-the-badge&logo=googledrive&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![Postgres](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
 ##  diagrama de Arquitectura
 
