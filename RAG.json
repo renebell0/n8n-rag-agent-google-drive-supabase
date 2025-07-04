@@ -1,0 +1,664 @@
+{
+  "name": "RAG",
+  "nodes": [
+    {
+      "parameters": {
+        "model": "gpt-4.1-mini",
+        "options": {}
+      },
+      "id": "a9d01029-752b-43a4-b438-ae4b9aded4e3",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        -620,
+        240
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "dySG68XOif67QKRa",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.documentContent }}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "=file_id",
+                "value": "={{ $('Set File ID').item.json.file_id }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "36057f84-f2ad-44f7-82ae-a05e1e6095de",
+      "name": "Default Data Loader",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        340,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "name": "user_documents",
+        "description": "Contains all the user's documents that you can check for context to answer user questions."
+      },
+      "id": "5cf69a1d-6af8-4753-a2db-ccd96e6a9b01",
+      "name": "Retrieve Documents",
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [
+        -20,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Herramientas de Agentes para RAG",
+        "height": 528.85546469693,
+        "width": 583.4552380860637,
+        "color": 4
+      },
+      "id": "e571b2ae-f7d3-435c-90f1-9671ad1d2de6",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Herramienta para Agregar un Archivo de Google Drive a una Base de Datos Vectorial",
+        "height": 671.8877842322804,
+        "width": 2070.8894079025763,
+        "color": 5
+      },
+      "id": "e5b08ec0-2ec6-4eb1-bed0-97ac802ea8c9",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1420,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Set File ID').item.json.file_id }}",
+          "mode": "id"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "text/plain"
+            }
+          }
+        }
+      },
+      "id": "d8b4fb7a-827a-43e4-8e51-8bbc2370a9d1",
+      "name": "Download File",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -400,
+        600
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0Y9H73tCj73iWX2A",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1eGe-fHESpCRShlcamHT1RghDLZS3XcBU",
+          "mode": "list",
+          "cachedResultName": "Meeting Notes",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1eGe-fHESpCRShlcamHT1RghDLZS3XcBU"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "id": "facf2efb-ba66-4040-9802-1875f27fa468",
+      "name": "File Created",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1360,
+        500
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0Y9H73tCj73iWX2A",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1eGe-fHESpCRShlcamHT1RghDLZS3XcBU",
+          "mode": "list",
+          "cachedResultName": "Meeting Notes",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1eGe-fHESpCRShlcamHT1RghDLZS3XcBU"
+        },
+        "event": "fileUpdated",
+        "options": {
+          "fileType": "all"
+        }
+      },
+      "id": "3a375624-ec06-4bd9-a820-d1f55dc3e5d6",
+      "name": "File Updated",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1360,
+        720
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "0Y9H73tCj73iWX2A",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "f56ca2b7-2368-4433-a2a7-b458c2de33a5",
+      "name": "Postgres Chat Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        240
+      ],
+      "notesInFlow": false,
+      "credentials": {
+        "postgres": {
+          "id": "6OVYEuKOQKaVeBXI",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "f48fdf2e-de2d-4630-8922-e43ff9ce2596",
+      "name": "Recursive Character Text Splitter",
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        340,
+        920
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "tableId": "documents",
+        "filterType": "string",
+        "filterString": "=metadata->>file_id=like.*{{ $json.file_id }}*"
+      },
+      "id": "5911a11c-7879-4ccc-91eb-9f893c29462b",
+      "name": "Delete Old Doc Rows",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -620,
+        600
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "OYesRcEZp0L1MiDP",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "10646eae-ae46-4327-a4dc-9987c2d76173",
+              "name": "file_id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e8807470-54f5-4f38-ab6f-0098fde474ed",
+      "name": "Set File ID",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -940,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Agente de IA con RAG y una Interfaz de Chat ",
+        "height": 464.8027193303974,
+        "width": 692.7866482806627
+      },
+      "id": "e2168b5f-43a6-48a2-b975-5d39d2c8ff2a",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -900,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "id": "171a8d61-9019-4f6d-b382-e4951b9e5cb8",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -840,
+        20
+      ],
+      "webhookId": "e985d15f-b2f6-456d-be15-97e0b1544a40"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When chat message received').item.json.chatInput }}",
+        "options": {
+          "systemMessage": "You are a personal assistant who helps answer questions from a corpus of documents when you don't know the answer yourself."
+        }
+      },
+      "id": "c04916bc-f754-4679-a162-d1e408711238",
+      "name": "RAG AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        -520,
+        20
+      ]
+    },
+    {
+      "parameters": {
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "id": "1908fecf-6767-49e5-8155-afe67758c87c",
+      "name": "Supabase Vector Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        160
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "OYesRcEZp0L1MiDP",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "id": "78251ac1-0788-4663-a4d2-c1889226a6f6",
+      "name": "Insert into Supabase Vectorstore",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        200,
+        480
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "OYesRcEZp0L1MiDP",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/text-embedding-004"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        160,
+        760
+      ],
+      "id": "a349b89a-d26c-44d0-af7e-0198374b003b",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "GJxfbJyEpWMWu6au",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener el texto de entrada del nodo anterior.\n// Se asume que el texto extraído está en la propiedad 'text' del primer elemento JSON de entrada.\n// Se utiliza un valor por defecto de cadena vacía para evitar errores si la propiedad no existe.\nconst inputText = $input.item.json.text || '';\n\n// Objeto que contendrá el JSON final estructurado.\nlet jsonOutput = {};\n\n// --- 1. Limpieza y Normalización Inicial ---\n// Eliminar caracteres nulos y no imprimibles que a menudo se encuentran en PDFs mal extraídos.\nlet cleanedText = inputText.replace(/[\\x00-\\x1F\\x7F-\\x9F]/g, '');\n\n// Normalizar espacios: reemplazar múltiples espacios, tabulaciones y saltos de línea con un solo espacio.\n// Esto ayuda a estandarizar el texto.\ncleanedText = cleanedText.replace(/\\s+/g, ' ').trim();\n\n// Eliminar posibles guiones de unión de palabras al final de línea (si el extractor de PDF los deja).\n// Por ejemplo: \"docu-mento\" -> \"documento\"\ncleanedText = cleanedText.replace(/(\\w+)-\\s+(\\w+)/g, '$1$2');\n\n// Eliminar números de página, encabezados/pies de página genéricos o marcas de agua comunes.\n// **ADAPTA ESTAS EXPRESIONES REGULARES A TUS DOCUMENTOS ESPECÍFICOS.**\n// Ejemplos comunes:\n// - Números de página como \"Página 1 de N\" o solo un número al final de línea.\ncleanedText = cleanedText.replace(/Página\\s+\\d+\\s+de\\s+\\d+|^\\s*\\d+\\s*$/gm, '');\n// - Textos como \"CONFIDENCIAL\" o \"PROPIEDAD DE LA EMPRESA\" que se repiten.\ncleanedText = cleanedText.replace(/CONFIDENCIAL|PROPIEDAD DE LA EMPRESA/g, '');\n// - Posibles artefactos de OCR como caracteres sueltos o símbolos extraños (ej: ~, ^, _, etc.).\ncleanedText = cleanedText.replace(/[~_^]/g, '');\n\n// Volver a normalizar espacios después de la limpieza.\ncleanedText = cleanedText.replace(/\\s+/g, ' ').trim();\n\n// Dividir el texto limpio en líneas para un procesamiento más fácil por línea.\nconst lines = cleanedText.split(/\\r?\\n/).map(line => line.trim()).filter(line => line.length > 0);\n\n// --- 2. Extracción de Información Estructurada (La Lógica Central) ---\n// Esta sección es la MÁS IMPORTANTE y requiere personalización según la estructura de tus PDFs.\n// Se presentan varios enfoques; usa el que mejor se adapte a tus necesidades o combínalos.\n\n// Inicializar un campo para el contenido del documento procesado\njsonOutput.documentContent = cleanedText; // Guardar el texto limpio completo\n\n// --- ENFOQUE A: Extracción de Pares Clave-Valor ---\n// Ideal para documentos con campos definidos como \"Campo: Valor\" o \"Campo Valor\".\n// Ejemplo: \"Nombre Cliente: Juan Pérez\", \"Fecha Emisión 2024-06-23\"\n\njsonOutput.extractedFields = {}; // Objeto para almacenar campos específicos\n\nlines.forEach(line => {\n    // Patrón 1: Clave: Valor (con o sin espacio después del \":\")\n    let match = line.match(/^([A-Za-z\\s]+):\\s*(.*)$/);\n    if (match) {\n        const key = match[1].trim().replace(/\\s+/g, '_').toLowerCase();\n        jsonOutput.extractedFields[key] = match[2].trim();\n        return; // Pasa a la siguiente línea si ya se procesó\n    }\n\n    // Patrón 2: Clave Valor (cuando la clave es una palabra o frase seguida de un valor)\n    // Cuidado: Este patrón puede ser muy amplio. Úsalo si tus claves son distintivas.\n    match = line.match(/^([A-Za-z\\s]{2,20})\\s+([A-Za-z0-9\\s.,\\-\\/]+)$/); // Ajusta la longitud de la clave si es necesario\n    if (match && !jsonOutput.extractedFields[match[1].trim().replace(/\\s+/g, '_').toLowerCase()]) {\n        const key = match[1].trim().replace(/\\s+/g, '_').toLowerCase();\n        jsonOutput.extractedFields[key] = match[2].trim();\n        return;\n    }\n});\n\n// --- ENFOQUE B: Extracción usando Expresiones Regulares (RegEx) para Patrones Específicos ---\n// Para extraer información que no sigue un patrón \"clave:valor\" pero sí un formato conocido (emails, fechas, montos, IDs).\n\n// Email\nconst emailMatch = cleanedText.match(/[\\w\\.-]+@[\\w\\.-]+\\.\\w+/);\nif (emailMatch) {\n    jsonOutput.email = emailMatch[0];\n}\n\n// Fecha (ej. DD/MM/YYYY, MM-DD-YYYY, YYYY-MM-DD)\n// Puedes añadir más formatos de fecha si lo necesitas\nconst dateMatch = cleanedText.match(/\\b(?:\\d{1,2}[\\/-]\\d{1,2}[\\/-]\\d{2,4}|\\d{4}[\\/-]\\d{1,2}[\\/-]\\d{1,2})\\b/);\nif (dateMatch) {\n    jsonOutput.fechaDetectada = dateMatch[0];\n}\n\n// Números de Teléfono (ej. +XX (YYY) ZZZ-WWWW)\nconst phoneMatch = cleanedText.match(/\\b(?:\\+\\d{1,3}\\s?)?\\(?\\d{2,4}\\)?[\\s.-]?\\d{3,4}[\\s.-]?\\d{4}\\b/);\nif (phoneMatch) {\n    jsonOutput.telefonoDetectado = phoneMatch[0];\n}\n\n// Montos de dinero (ej. $123.45, €1.234,56)\nconst currencyMatch = cleanedText.match(/(?:[\\$€£]|USD|EUR|GBP)\\s*([\\d.,]+)/);\nif (currencyMatch && currencyMatch[1]) {\n    // Normalizar a punto decimal si usa coma y convertir a número\n    jsonOutput.montoDetectado = parseFloat(currencyMatch[1].replace(/\\./g, '').replace(',', '.'));\n}\n\n// ID de documento o número de referencia (ej. Factura #XYZ123, Ref: ABC-001)\nconst idMatch = cleanedText.match(/(?:Factura|Referencia|ID)[:#\\s]*([A-Za-z0-9\\-]+)/i);\nif (idMatch && idMatch[1]) {\n    jsonOutput.referenciaID = idMatch[1];\n}\n\n// --- ENFOQUE C: División en Secciones (si tu documento tiene títulos de sección claros) ---\n// Ejemplo: \"INTRODUCCION\", \"CAPITULO 1\", \"ANEXOS\"\n// Asegúrate de que los delimitadores sean únicos y consistentes.\n/*\nconst sections = cleanedText.split(/(INTRODUCCION|CAPITULO 1|CONCLUSION):/);\nif (sections.length > 1) {\n    // Si la división es por patrones, el primer elemento (antes del primer match) puede ser basura o un preámbulo.\n    // Iteramos sobre las secciones para asignar el contenido.\n    for (let i = 1; i < sections.length; i += 2) {\n        const sectionTitle = sections[i].trim().toLowerCase().replace(/\\s+/g, '_').replace(/:$/, '');\n        jsonOutput[sectionTitle] = (sections[i + 1] || '').trim();\n    }\n}\n*/\n\n// --- ENFOQUE D: Procesamiento de Líneas o Párrafos ---\n// Si necesitas procesar cada línea o párrafo individualmente para construir listas, etc.\n// Por ejemplo, extraer una lista de ítems de productos en una factura.\n/*\njsonOutput.items = [];\nlines.forEach(line => {\n    // Ejemplo: buscar líneas que parezcan ítems (número, descripción, cantidad, precio)\n    const itemMatch = line.match(/^(\\d+)\\s+([A-Za-z\\s]+)\\s+(\\d+)\\s+([\\d.,]+)$/);\n    if (itemMatch) {\n        jsonOutput.items.push({\n            cantidad: parseInt(itemMatch[1]),\n            descripcion: itemMatch[2].trim(),\n            precioUnitario: parseFloat(itemMatch[4].replace(',', '.'))\n        });\n    }\n});\n*/\n\n// --- 3. Devolver el Resultado ---\n// El nodo Code espera un array de objetos JSON como salida.\n// Cada objeto en el array representará un \"ítem\" en n8n.\nreturn [{ json: jsonOutput }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        40,
+        500
+      ],
+      "id": "c6d383ea-852d-4cfa-ab50-44b99dc9e6cd",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "modelName": "models/text-embedding-004"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        300
+      ],
+      "id": "d4340be7-eaf8-4a0a-a25a-2d9dce3888e9",
+      "name": "Embeddings Google Gemini1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "GJxfbJyEpWMWu6au",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        200,
+        220
+      ],
+      "id": "f9090f6d-8985-429b-9521-3b9367768b52",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "GJxfbJyEpWMWu6au",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -180,
+        600
+      ],
+      "id": "b0015a6a-7e65-4d66-9f1c-13b01b476d35",
+      "name": "Extract from File"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "RAG AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Insert into Supabase Vectorstore",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve Documents": {
+      "ai_tool": [
+        [
+          {
+            "node": "RAG AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download File": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "File Created": {
+      "main": [
+        [
+          {
+            "node": "Set File ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "File Updated": {
+      "main": [
+        [
+          {
+            "node": "Set File ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "RAG AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Old Doc Rows": {
+      "main": [
+        [
+          {
+            "node": "Download File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set File ID": {
+      "main": [
+        [
+          {
+            "node": "Delete Old Doc Rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "RAG AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Retrieve Documents",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Insert into Supabase Vectorstore",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Insert into Supabase Vectorstore",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Retrieve Documents",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fdb6ab23-b8e2-4b19-9d24-d4ad5e17799c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9945426a6b1f5aaba23e37680d3e73f6c9c346813fc33f95a926206417aca631"
+  },
+  "id": "MzBcVoDqRd3rFxtr",
+  "tags": []
+}
