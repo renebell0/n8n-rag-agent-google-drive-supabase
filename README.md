@@ -28,8 +28,8 @@ Este agente RAG automatiza el proceso, permitiendo a los usuarios "chatear" con 
 -   **Base de Datos Vectorial con Supabase:** Almacena eficientemente los *embeddings* de los documentos para búsquedas semánticas rápidas.
 -   **Modelo de Lenguaje (LLM):** Integrado con modelos como los de OpenAI para generar respuestas coherentes y contextualizadas.
 -   **Dos Flujos de Trabajo Clave:**
-    **Ingesta de Datos:** Procesa los documentos de Google Drive, los divide, genera *embeddings* y los almacena en Supabase.
-    **Inferencia/Preguntas:** Recibe una pregunta, busca la información más relevante en la base de datos vectorial y genera una respuesta.
+-   **Ingesta de Datos:** Procesa los documentos de Google Drive, los divide, genera *embeddings* y los almacena en Supabase.
+-   **Inferencia/Preguntas:** Recibe una pregunta, busca la información más relevante en la base de datos vectorial y genera una respuesta.
 -   **Fácil de Desplegar:** Utiliza Docker para un entorno de desarrollo y despliegue sencillo.
 
 ## 🛠️ Stack Tecnológico
